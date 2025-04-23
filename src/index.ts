@@ -1,4 +1,4 @@
-import { getFolderPath, initializeFile } from './utils/utils';
+import { getFolderPath, initializeFile } from '@/utils/utils';
 import 'dotenv/config';
 
 getFolderPath();

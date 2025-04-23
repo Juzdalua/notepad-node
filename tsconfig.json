@@ -11,10 +11,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "paths": {
-      "@modules/*": ["src/modules/*"],
-      "@tcp/*": ["src/modules/tcp/*"]
-    },
+    "paths": { "@/*": ["src/*"] },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
