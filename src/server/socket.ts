@@ -84,7 +84,7 @@ export class SIOServer {
       });
 
       socket.on('Turnon', (data) => {
-        this.SendClientByName(data);
+        this.SendClientByName('Turnon', data);
       });
     });
 
@@ -107,10 +107,10 @@ export class SIOServer {
     }
   }
 
-  public SendClientByName(name: string) {
+  public SendClientByName(event: string, name: string) {
     for (const [socketId, detail] of this.clients.entries()) {
       if (detail.type == name) {
-        detail.socket.emit('Turnon', name);
+        detail.socket.emit(event, name);
       }
     }
   }
