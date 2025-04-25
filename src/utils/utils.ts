@@ -15,17 +15,28 @@ export const getFolderPath = (): string => {
   return nasPath;
 };
 
-export const testPath = () => {
+export const testPath = (): void => {
   const desktopPath = path.join(os.homedir(), 'Desktop', 'test.bat');
 
-  exec(`start cmd /c ${desktopPath}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(error);
-      return;
-    }
-    console.log('stdout:', stdout);
-    console.error('stderr:', stderr);
-  });
+  exec(
+    `start cmd /c ${desktopPath}`,
+    (
+      error: Error | null,
+      stdout: string | Buffer,
+      stderr: string | Buffer,
+    ): void => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      if (stdout) {
+        console.log('stdout:', stdout);
+      }
+      if (stderr) {
+        console.error('stderr:', stderr);
+      }
+    },
+  );
 };
 
 export const initializeFile = (
