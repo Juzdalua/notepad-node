@@ -4,10 +4,15 @@ import http, { createServer } from 'http';
 import { DefaultEventsMap, Socket, Server } from 'socket.io';
 import { app } from './api';
 
+interface ClientDetail {
+  type: SendClientType;
+  socket: Socket;
+}
+
 export class SIOServer {
   private io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;
   private server: http.Server;
-  private clients: Map<string, SendClientType> = null;
+  private clients: Map<string, ClientDetail> = null;
   private webClient: Socket<
     DefaultEventsMap,
     DefaultEventsMap,
@@ -26,13 +31,13 @@ export class SIOServer {
         methods: ['GET', 'POST'],
       },
     });
-    this.clients = new Map<string, SendClientType>();
+    this.clients = new Map<string, ClientDetail>();
   }
 
   public getClientsInfo() {
     const c = [];
-    for (const [socketId, type] of this.clients.entries()) {
-      c.push(type);
+    for (const [socketId, detail] of this.clients.entries()) {
+      c.push(detail.type);
     }
 
     return {
@@ -47,7 +52,10 @@ export class SIOServer {
 
       socket.on('register', (data) => {
         if (data.clientType && !this.clients.has(socket.id)) {
-          this.clients.set(socket.id, data.clientType);
+          this.clients.set(socket.id, {
+            type: data.clientType,
+            socket,
+          });
           console.log(`[Client registered] ${socket.id}: [${data.clientType}]`);
 
           if (data.clientType == SendClientType.WEB) {
@@ -64,12 +72,19 @@ export class SIOServer {
         );
 
         if (this.clients.has(socket.id)) {
-          if (this.clients.get(socket.id) == SendClientType.WEB) {
+          if (
+            this.clients.get(socket.id) &&
+            this.clients.get(socket.id).type == SendClientType.WEB
+          ) {
             this.webClient = null;
           }
 
           this.clients.delete(socket.id);
         }
+      });
+
+      socket.on('Turnon', (data) => {
+        this.SendClientByName(data);
       });
     });
 
@@ -89,6 +104,16 @@ export class SIOServer {
   public SendClientInfoToWebClient() {
     if (this.io && this.webClient) {
       this.webClient.emit('Clients', this.getClientsInfo());
+    }
+  }
+
+  public SendClientByName(name: string) {
+    console.log(name);
+
+    for (const [socketId, detail] of this.clients.entries()) {
+      if (detail.type == name) {
+        detail.socket.emit('Turnon', name);
+      }
     }
   }
 }
