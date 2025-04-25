@@ -30,10 +30,10 @@ export const testPath = (): void => {
         return;
       }
       if (stdout) {
-        console.log('stdout:', stdout);
+        console.log('stdout:', stdout.toString());
       }
       if (stderr) {
-        console.error('stderr:', stderr);
+        console.error('stderr:', stderr.toString());
       }
     },
   );

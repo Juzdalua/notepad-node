@@ -67,7 +67,7 @@ export class SIOServer {
       socket.on('disconnect', () => {
         console.log(
           `[Client disconnected] ${socket.id}: [${
-            this.clients.get(socket.id) ?? 'Not Registerd Client'
+            this.clients.get(socket.id).type ?? 'Not Registerd Client'
           }]`,
         );
 
@@ -108,8 +108,6 @@ export class SIOServer {
   }
 
   public SendClientByName(name: string) {
-    console.log(name);
-
     for (const [socketId, detail] of this.clients.entries()) {
       if (detail.type == name) {
         detail.socket.emit('Turnon', name);
