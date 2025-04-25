@@ -1,5 +1,7 @@
-import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
+import express from 'express';
+import initRouter from './routes';
 
 export const app = express();
 
@@ -10,8 +12,8 @@ app.use(
   }),
 );
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('public'));
 
-app.get('/', (req: Request, res: Response) => {
-  console.log('HI');
-  res.end();
-});
+initRouter(app);
