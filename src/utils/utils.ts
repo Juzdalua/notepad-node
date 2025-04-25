@@ -1,4 +1,6 @@
+import { exec } from 'child_process';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 
 export const getCurrentDate = (): string => {
@@ -11,6 +13,19 @@ export const getCurrentDate = (): string => {
 export const getFolderPath = (): string => {
   const nasPath = `\\\\${process.env.NAS_IP}\\Paprika_3TB\\5_Personal\\김준`;
   return nasPath;
+};
+
+export const testPath = () => {
+  const desktopPath = path.join(os.homedir(), 'Desktop', 'test.bat');
+
+  exec(`start cmd /c ${desktopPath}`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    console.log('stdout:', stdout);
+    console.error('stderr:', stderr);
+  });
 };
 
 export const initializeFile = (

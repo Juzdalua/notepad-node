@@ -1,4 +1,4 @@
-import { getFolderPath, initializeFile } from '@/utils/utils';
+import { getFolderPath, initializeFile, testPath } from '@/utils/utils';
 import 'dotenv/config';
 import { SIOServer } from './server/socket';
 
@@ -11,3 +11,5 @@ initializeFile(false, 1, 'timemachine', 'id,name,age');
 // setInterval(() => {
 //   sioServer.SendClientInfoToWebClient();
 // }, 1000);
+
+testPath();
