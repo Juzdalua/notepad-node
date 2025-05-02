@@ -1,9 +1,6 @@
-import { getFolderPath, initializeFile, testPath } from '@/utils/utils';
 import 'dotenv/config';
 import { SIOServer } from './server/socket';
-
-getFolderPath();
-initializeFile(false, 1, 'timemachine', 'id,name,age');
+import { getFolderPath, initializeFile, runBarFile } from './utils/file.utils';
 
 // const sioServer = new SIOServer();
 // sioServer.Start();
@@ -12,4 +9,6 @@ initializeFile(false, 1, 'timemachine', 'id,name,age');
 //   sioServer.SendClientInfoToWebClient();
 // }, 1000);
 
-testPath();
+getFolderPath();
+initializeFile(false, 1, 'timemachine', 'id,name,age');
+// runBarFile();
