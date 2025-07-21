@@ -9,7 +9,7 @@ export const getFolderPath = (): string => {
   return nasPath;
 };
 
-export const runBarFile = (): void => {
+export const runBatFile = (): void => {
   const desktopPath = path.join(os.homedir(), 'Desktop', 'test.bat');
 
   exec(
@@ -60,6 +60,9 @@ export const initializeFile = (
         name && name.trim() != '' ? name + '_' : ''
       }${timeStamp}.csv`,
     );
+
+    console.log(filePath)
+    return;
 
     let writeStream: fs.WriteStream | null = null;
     writeStream = fs.createWriteStream(filePath, { flags: 'a' });
