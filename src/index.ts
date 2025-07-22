@@ -17,10 +17,14 @@ const d = `${c.getFullYear()}-${String(c.getMonth() + 1).padStart(2, '0')}-${Str
   2,
   '0'
 )}:${String(c.getSeconds()).padStart(2, '0')}`;
+console.log(a + 9 * 60 * 60 * 1000);
 console.log(a.toString());
 console.log(b);
 console.log(d);
 console.log(b == d);
+console.log(b.length, d.length);
+
+console.log(new Date(1752568767000));
 
 // console.log(getFolderPath());
 // initializeFile(true, 1, 'timemachine', 'id,name,age');
